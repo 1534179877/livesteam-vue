@@ -1,7 +1,6 @@
 <template>
-  <a>aabout</a>
+  <h2>abouthhhhhhhhhhh</h2>
  </template>
-
 <script >
 export default {
   name: 'aboutPage',
@@ -11,6 +10,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped >
 
 </style>

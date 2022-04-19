@@ -1,22 +1,25 @@
 <template>
-  <TopBar msg="live index" username="pdd"></TopBar>
+  <div class="topbar">
+    <TopBar></TopBar>
+  </div>
   <router-link to="/Home/home">Go to Home</router-link>
   <router-link to="/Home/about">Go to About</router-link>
   <router-link to="/Home/helloword">Go to helloword</router-link>
-  <router-view></router-view>
+  <div class="main">
+    <router-view></router-view>
+  </div>
+
+
 </template>
 
-<script>
+<script setup>
 import TopBar from '../components/topbar.vue'
 
-export default {
-  name: "HomePage",
-  components:{
-    TopBar
-  }
-}
+
 </script>
 
 <style scoped>
-
+.main{
+  background-color: aquamarine;
+}
 </style>

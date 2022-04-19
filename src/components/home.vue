@@ -1,18 +1,95 @@
 <template>
-  <div class="logincard">
-    <login_card ></login_card>
+<!--  <div class="login_card">
+    <login_card :islogin="islogin"></login_card>
+  </div>-->
+  <div class="container">
+    <div class="player-area">
+
+    </div>
+    <div class="area_detail">
+      <h2>推荐直播</h2>
+      <div  class="room-detail">
+        <room_card v-for="room in roomList" :key="room.index"
+                   :roomTital='room.roomTital'
+                   :userName='room.userName'
+                   :watchnum='room.watchnum' >
+        </room_card>
+      </div>
+      <div>
+
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script setup>
+//import Login_card from "@/components/widget/login_card";
+import Room_card from "@/components/widget/room_card";
+//import { useStore } from "vuex";
+//const store = useStore();
+//const islogin = true;
 
-import Login_card from "@/components/widget/login_card";
+
+const roomList = [{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+},{
+  roomTital: 'gggggggggggg',
+  userName: 'pxy',
+  watchnum: 8
+}]
+
+
 </script>
 
 <style scoped>
-.logincard{
+.container{
+  width: 1200px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.player-area{
+  background-color: red;
+  height: 630px;
+  margin-bottom: 50px;
+}
+.area_detail{
+  width: 100%;
+  height: 408px;
+  box-sizing: border-box;
+
+}
+.room-detail{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>

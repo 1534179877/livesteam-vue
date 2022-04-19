@@ -1,6 +1,6 @@
 import {request} from "@/networks/index";
 
-const Beasurl = 'users';
+const Beasurl = 'user';
 
 export function register_user(UserName,passWord){
   return request({
@@ -13,9 +13,13 @@ export function register_user(UserName,passWord){
   })
 }
 
-export function get_user(){
+export function login_user(data){
   return request({
-    method:'get',
-    url:`/${Beasurl}/getuser`,
+    method:'post',
+    url:`/${Beasurl}/login`,
+    data:{
+      nickname: data.userName,
+      password: data.passWord
+    }
   })
 }
