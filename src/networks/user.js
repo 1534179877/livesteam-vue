@@ -2,24 +2,28 @@ import {request} from "@/networks/index";
 
 const Beasurl = 'user';
 
-export function register_user(UserName,passWord){
+export function register_user(user){
   return request({
     method:'post',
     url:`/${Beasurl}/register`,
     data:{
-      userName: UserName,
-      passWord: passWord
+      id: user.phone,
+      email:user.email,
+      userName: user.username,
+      password: user.password
     }
   })
 }
 
-export function login_user(data){
+export function login_user(user){
   return request({
     method:'post',
     url:`/${Beasurl}/login`,
     data:{
-      nickname: data.userName,
-      password: data.passWord
+
+        userName: user.username,
+        password: user.password
+
     }
   })
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+
     <div v-for="card in Kblist" :key="card.KbId" style="display: inline-block">
       <kanban-cards type="created" :cardName="card.cardName"></kanban-cards>
     </div>
@@ -20,14 +20,18 @@
             <el-button @click="showCard = !showCard ">取消</el-button>
           </el-form-item>
         </el-form>
+
       </div>
     </el-card>
+
   </div>
 </template>
 
 <script>
 import kanbanCards from "@/components/Cards/kanbanCards";
 import { CircleClose } from '@element-plus/icons-vue'
+import {getkanban} from "@/networks/admin/dashboard";
+
 export default {
   name: "dashborad",
   components: {
@@ -61,8 +65,14 @@ export default {
     onSubmit() {
       this.Kblist.push({KbId: this.Kblist.length + 1, cardName: this.newKb.name})
       this.showCard = !this.showCard
+    },
+    getKanbanlist(){
+      getkanban('admin').then(res =>{
+        console.log(res);
+      })
     }
-  }
+  },
+
 }
 </script>
 

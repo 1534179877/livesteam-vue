@@ -81,6 +81,39 @@
         />
       </el-form-item>
 
+      <el-form-item prop="phone">
+        <span class="svg-container">
+          <el-icon>
+            <Iphone/>
+          </el-icon>
+        </span>
+        <el-input
+            ref="phone"
+            v-model="registerForm.phone"
+            placeholder="phone"
+            name="phone"
+            type="text"
+            tabindex="2"
+            auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="email">
+        <span class="svg-container">
+          <el-icon>
+            <Message/>
+          </el-icon>
+        </span>
+        <el-input
+            ref="email"
+            v-model="registerForm.email"
+            placeholder="email"
+            name="email"
+            type="text"
+            tabindex="3"
+            auto-complete="on"
+        />
+      </el-form-item>
+
       <el-form-item prop="password">
         <span class="svg-container">
           <el-icon>
@@ -94,7 +127,7 @@
             :type="passwordType"
             placeholder="Password"
             name="password"
-            tabindex="2"
+            tabindex="4"
             auto-complete="on"
             show-password="true"
         />
@@ -113,32 +146,35 @@
             :type="passwordType"
             placeholder="rePassword"
             name="repassword"
-            tabindex="3"
+            tabindex="5"
             auto-complete="on"
             show-password="true"
         />
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click="handleLogin">register</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click="register">register</el-button>
       <el-button :loading="loading" type="success" style="width:100%;margin-bottom:30px; margin-left: 0" @click="loginShow = !loginShow">Go to Login</el-button>
-
+      <el-button @click="test">click</el-button>
 
     </el-form>
   </div>
 </template>
 
 <script>
-import {login_user} from "@/networks/user";
-import { User, Hide, View ,Lock} from '@element-plus/icons-vue'
+import {login_user , register_user} from "@/networks/user";
+import { User, Lock, Iphone, Message} from '@element-plus/icons-vue'
+import {isemail, isphone} from "@/utils/validate";
+import {ElMessage} from "element-plus";
+
 export default {
   name: "Login",
   components:{
-    User, Hide, View,Lock
+    User, Lock, Iphone, Message
   },
   data(){
     const validateUsername = (rule, value, callback) => {
       if (value.length == 0) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('Please enter the right user name'))
       } else {
         callback()
       }
@@ -150,6 +186,7 @@ export default {
         callback()
       }
     }
+
     const validateregUsername = (rule, value, callback) => {
       if (value.length == 0) {
         callback(new Error('Please enter the you want register user name'))
@@ -171,6 +208,20 @@ export default {
         callback()
       }
     }
+    const validateregreUserPhone = (rule, value, callback) => {
+      if (!isphone(value)) {
+        callback(new Error('The phone number is not right!'))
+      } else {
+        callback()
+      }
+    }
+    const validateregEmail = (rule, value, callback) => {
+      if (!isemail(value)) {
+        callback(new Error('The email is not right!'))
+      } else {
+        callback()
+      }
+    }
     return{
       loginShow: true,
       loginForm: {
@@ -178,11 +229,15 @@ export default {
         password: ''
       },
       registerForm: {
-        username: '',
+        userName: '',
+        phone:'',
+        email:'',
         password: '',
         repassword: ''
       },
       registerRules: {
+        phone: [{required: true, trigger: 'blur',validator:validateregreUserPhone}],
+        email:[{required: true ,trigger: 'blur', validator: validateregEmail}],
         username: [{ required: true, trigger: 'blur', validator: validateregUsername }],
         password: [{ required: true, trigger: 'blur', validator: validateregPassword }],
         repassword: [{ required: true, trigger: 'blur', validator: validateregrePassword }]
@@ -197,6 +252,7 @@ export default {
     }
   },
   methods: {
+
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -212,7 +268,29 @@ export default {
       console.log(this.loginForm);
       login_user( this.loginForm ).then( res =>{
         console.log(res)
-        //this.$route.
+        if(res.data.code === '0') {
+          this.$router.push({
+            path: '/admin/dashboard'
+          })
+        }else{
+          ElMessage({
+            message: `warning:${res.data.msg}`,
+            type: 'warning',
+          })
+        }
+
+      })
+    },
+    register(){
+      register_user(this.registerForm).then(res=>{
+        if(res.data.code === '0'){
+
+        }else{
+          ElMessage({
+            message: `warning:${res.data.msg}`,
+            type: 'warning',
+          })
+        }
       })
     }
   }
