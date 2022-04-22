@@ -33,6 +33,7 @@ const routes = [
   },
   {
     path: '/admin',
+    name: 'admin',
     component: ()=>import('../views/admin'),
     redirect: '/admin/dashboard',
     children: [
@@ -47,9 +48,14 @@ const routes = [
       {
         path: '/admin/test',
         component: ()=> import('../views/admin/children/test')
-      },
+      }
+
 
     ]
+  },
+  {
+    path: '/detail/:cardName',
+    component: ()=>import('../views/details/detail')
   }
 ]
 const router = createRouter({

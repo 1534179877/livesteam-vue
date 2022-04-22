@@ -154,7 +154,7 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click="register">register</el-button>
       <el-button :loading="loading" type="success" style="width:100%;margin-bottom:30px; margin-left: 0" @click="loginShow = !loginShow">Go to Login</el-button>
-      <el-button @click="test">click</el-button>
+
 
     </el-form>
   </div>
@@ -165,7 +165,7 @@ import {login_user , register_user} from "@/networks/user";
 import { User, Lock, Iphone, Message} from '@element-plus/icons-vue'
 import {isemail, isphone} from "@/utils/validate";
 import {ElMessage} from "element-plus";
-
+import {mapMutations} from 'vuex'
 export default {
   name: "Login",
   components:{
@@ -252,7 +252,9 @@ export default {
     }
   },
   methods: {
-
+    ...mapMutations([
+        'setUserInfo'
+    ]),
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -263,14 +265,14 @@ export default {
         this.$refs.password.focus()
       })
     },
-
     login(){
       console.log(this.loginForm);
       login_user( this.loginForm ).then( res =>{
-        console.log(res)
-        if(res.data.code === '0') {
+        if(res.data.code == '0') {
+          console.log(this.loginForm.username)
+          this.setUserInfo(this.loginForm.username);
           this.$router.push({
-            path: '/admin/dashboard'
+            path: '/admin'
           })
         }else{
           ElMessage({
@@ -283,7 +285,7 @@ export default {
     },
     register(){
       register_user(this.registerForm).then(res=>{
-        if(res.data.code === '0'){
+        if(res.data.code === '0') {
 
         }else{
           ElMessage({

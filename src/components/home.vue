@@ -69,27 +69,5 @@ const roomList = [{
 </script>
 
 <style scoped>
-.container{
-  width: 1200px;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.player-area{
-  background-color: red;
-  height: 630px;
-  margin-bottom: 50px;
-}
-.area_detail{
-  width: 100%;
-  height: 408px;
-  box-sizing: border-box;
 
-}
-.room-detail{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
 </style>

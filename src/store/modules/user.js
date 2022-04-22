@@ -1,11 +1,11 @@
 const state = {
-    userName:'testuser',
+    userName:'admin',
 };
 
 const getters = {
     getUserinfo:(state) => {
         return state.userName;
-}
+    }
 }
 const actions = {
 

@@ -1,12 +1,16 @@
 <template>
-
-  <el-card class="box-card card" >
-    <span>看板：{{cardName}} </span>
+  <el-card class="box-card card"  @click="detail">
+    <span>{{cardName}}</span>
     <el-button style="float: right; padding: 3px 0;" type="text" >
-      <el-icon v-if="type === 'created'" :size="20">
-        <circle-close/>
-      </el-icon>
-      <el-icon v-else @click="$emit('addCard')" :size="20">
+
+        <el-icon v-if="type === 'created'" :size="20" @click.stop="$emit('deleteCard')">
+          <circle-close/>
+        </el-icon>
+
+
+
+
+      <el-icon v-else @click.stop="$emit('addCard')" :size="20">
         <circle-plus/>
       </el-icon>
     </el-button>
@@ -17,11 +21,17 @@
 <script>
 import { CirclePlus ,CircleClose} from "@element-plus/icons-vue";
 
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'kanbanCards',
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      dlkanban:{
+        name:'',
+        userName:''
+      }
     }
   },
   components:{
@@ -30,12 +40,20 @@ export default {
   },
   props: {
     type: String,
-    cardName: String
+    cardName: String,
+    cardId : Number
   },
   methods: {
+    ...mapGetters([
+      'getUserinfo'
+    ]),
     addCard(){
-      alert('fdsf')
-    }
+
+    },
+    detail(){
+      this.$router.push('/detail/'+this.cardName)
+    },
+
   }
 
 }
